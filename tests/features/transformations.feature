@@ -126,7 +126,7 @@ Scenario: Simple Transformation With Writer Shorthand Mapping
     ------------------------------------
 
 
-Scenario: Simple Transformation With Writer Shorthand Mapping And Default Transformer
+Scenario: Simple Transformation With Writer Shorthand Mapping And Default Transformer / Reader
 
     When I transform the following json:
     ------------------------------------
@@ -148,12 +148,7 @@ Scenario: Simple Transformation With Writer Shorthand Mapping And Default Transf
     ------------------------------------
 
     {
-        "/Transfomers: Combiner Wars": {
-            "reader": {
-                "type": "jsonPointer",
-                "path": "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10"
-            }
-        }
+        "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10": {}
     }
 
     ------------------------------------
@@ -162,6 +157,14 @@ Scenario: Simple Transformation With Writer Shorthand Mapping And Default Transf
     Then I should get:
     ------------------------------------
     {
-        "Transfomers: Combiner Wars": 1631403869
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": 1631403869
+                    }
+                }
+            }
+        }
     }
     ------------------------------------
