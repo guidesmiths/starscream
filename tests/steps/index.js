@@ -11,7 +11,6 @@ var starscream = require('../..')
 module.exports = (function() {
 
     var dictionary = new Dictionary().define('json', /([^\u0000]*)/, function(text, cb) {
-        console.log(text)
         safeParse(text, cb)
     })
 

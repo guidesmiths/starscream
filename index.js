@@ -4,6 +4,7 @@ var R = require('ramda')
 var readers = require('./lib/readers')
 var transformers = require('./lib/transformers')
 var writers = require('./lib/writers')
+var expand = require('./lib/config/expand')
 
 module.exports = function starscream(overrides, original, done) {
 
@@ -13,7 +14,7 @@ module.exports = function starscream(overrides, original, done) {
         writers: writers
     }, overrides);
 
-    async.reduce(options.mapping, {}, function(wip, entry, next) {
+    async.reduce(expand(options.mapping), {}, function(wip, entry, next) {
         async.seq(
             function(cb) {
                 if (!options.readers.hasOwnProperty(entry.reader.type)) return cb(new Error(format('Unknown reader: %s', entry.reader.type)))

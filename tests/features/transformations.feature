@@ -45,3 +45,38 @@ Scenario: Simple Transformation With Longhand Mapping
     }
     ------------------------------------
 
+
+Scenario: Simple Transformation With Shorthand Mapping
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": 1631403869
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+
+    {
+        "/Transfomers: Combiner Wars": "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10"
+    }
+
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "Transfomers: Combiner Wars": 1631403869
+    }
+    ------------------------------------
