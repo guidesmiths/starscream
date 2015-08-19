@@ -197,4 +197,4 @@ var options = {
   }
 }
 ```
-Reads the value at ```/source/path``` in the original document, and cross references it an item of refdata
+Reads the value at ```/source/path``` in the original document, and cross references it an item of refdata. The same mechanism can be used for writing your own readers and writers too.
