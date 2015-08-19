@@ -52,7 +52,7 @@ Reads the value at  ```/source/path``` in the original document, and writes it t
 ```js
 var options = {
   mapping: {
-    "/source/path": /destination/path
+    "/source/path": "/destination/path"
   }
 }
 ```
