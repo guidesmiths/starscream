@@ -1,6 +1,6 @@
 {
   "name": "starscream",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JSON transformer with asynchronous converters",
   "main": "index.js",
   "scripts": {
