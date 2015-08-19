@@ -121,3 +121,4 @@ Scenario: Serial readers and transformers configured with an array of strings
         "combined-isbn": "1631403869 978-1631403866"
     }
     ------------------------------------
+
