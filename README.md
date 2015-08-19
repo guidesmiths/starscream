@@ -185,6 +185,60 @@ var options = {
 ```
 Reads the values at ```/source/path```in the original document, transforms it to uppercase, adds the ```foo-``` prefix and writes it to ```/destination/path``` in the transformed document
 
+## Out Of The Box Transformers
+
+#### uppercase
+
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    transformer: "uppercase",
+    writer: "/destination/path"
+  }]
+}
+```
+
+#### lowercase
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    transformer: "lowercase",
+    writer: "/destination/path"
+  }]
+}
+```
+
+#### mutualExclusion
+```js
+var options = {
+  mapping: [{
+    readers: [
+      "/source/path/a",
+      "/source/path/b"
+    ],
+    transformer: "mutualExclusion",
+    writer: "/destination/path"
+  }]
+}
+```
+Writes either ```/source/path/a``` or ```/source/path/b``` (with preference for a)
+
+#### guard
+```js
+var options = {
+  mapping: [{
+    readers: [
+      "/source/path/a",
+      "/source/path/b"
+    ],
+    transformer: "mutualExclusion",
+    writer: "/destination/path"
+  }]
+}
+```
+Writes ```/source/path/b``` if ```/source/path/b``` is falsey
 
 ## Custom Transformers
 ```js

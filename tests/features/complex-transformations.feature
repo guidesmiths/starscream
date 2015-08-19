@@ -278,7 +278,7 @@ Scenario: Guard condition (first reader truthy)
     ------------------------------------
 
 
-Scenario: Guard condition (second reader truthy)
+Scenario: Guard condition (first reader falsey)
 
     When I transform the following json:
     ------------------------------------
@@ -326,5 +326,108 @@ Scenario: Guard condition (second reader truthy)
     ------------------------------------
     {
         "isbn-13": "978-1631403866"
+    }
+    ------------------------------------
+
+
+Scenario: Conditional (first reader truthy)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869",
+                        "isbn-13": "978-1631403866",
+                        "format": "paperback",
+                        "publisher": "IDW Publishing (27 Aug. 2015)",
+                        "published": "2015-08-18T23:23:24.140Z",
+                        "pages": 152
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "serial",
+                "readers": [
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/format",
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-13"
+                ]
+            },
+            "transformer": "conditional",
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/isbn-13"
+            }
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "isbn-13": "978-1631403866"
+    }
+    ------------------------------------
+
+
+Scenario: Conditional (second reader falsey)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869",
+                        "isbn-13": "978-1631403866",
+                        "format": "paperback",
+                        "publisher": "IDW Publishing (27 Aug. 2015)",
+                        "published": "2015-08-18T23:23:24.140Z",
+                        "pages": 152
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "serial",
+                "readers": [
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/foo",
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-13"
+                ]
+            },
+            "transformer": "conditional",
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/isbn-13"
+            }
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
     }
     ------------------------------------
