@@ -45,7 +45,7 @@ Scenario: Serial readers and transformers configured with an array of objects
                     "separator": "_"
                 }, {
                     "type": "prefix",
-                    "prefix": "FOO_"
+                    "text": "FOO_"
                 }]
             },
             "writer": {
