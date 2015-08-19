@@ -122,3 +122,209 @@ Scenario: Serial readers and transformers configured with an array of strings
     }
     ------------------------------------
 
+
+Scenario: Mutual exclusion (first reader present)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869",
+                        "isbn-13": "978-1631403866",
+                        "format": "paperback",
+                        "publisher": "IDW Publishing (27 Aug. 2015)",
+                        "published": "2015-08-18T23:23:24.140Z",
+                        "pages": 152
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "serial",
+                "readers": [
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/format",
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-13"
+                ]
+            },
+            "transformer": "mutualExclusion",
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/format-or-isbn-13"
+            }
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "format-or-isbn-13": "paperback"
+    }
+    ------------------------------------
+
+
+Scenario: Mutual exclusion (second reader present)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869",
+                        "isbn-13": "978-1631403866",
+                        "format": "paperback",
+                        "publisher": "IDW Publishing (27 Aug. 2015)",
+                        "published": "2015-08-18T23:23:24.140Z",
+                        "pages": 152
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "serial",
+                "readers": [
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/foo",
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-13"
+                ]
+            },
+            "transformer": "mutualExclusion",
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/format-or-isbn-13"
+            }
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "format-or-isbn-13": "978-1631403866"
+    }
+    ------------------------------------
+
+
+Scenario: Guard condition (first reader truthy)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869",
+                        "isbn-13": "978-1631403866",
+                        "format": "paperback",
+                        "publisher": "IDW Publishing (27 Aug. 2015)",
+                        "published": "2015-08-18T23:23:24.140Z",
+                        "pages": 152
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "serial",
+                "readers": [
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/format",
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-13"
+                ]
+            },
+            "transformer": "guard",
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/isbn-13"
+            }
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+    }
+    ------------------------------------
+
+
+Scenario: Guard condition (second reader truthy)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869",
+                        "isbn-13": "978-1631403866",
+                        "format": "paperback",
+                        "publisher": "IDW Publishing (27 Aug. 2015)",
+                        "published": "2015-08-18T23:23:24.140Z",
+                        "pages": 152
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "serial",
+                "readers": [
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/foo",
+                    "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-13"
+                ]
+            },
+            "transformer": "guard",
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/isbn-13"
+            }
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "isbn-13": "978-1631403866"
+    }
+    ------------------------------------

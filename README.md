@@ -42,7 +42,7 @@ starscream(options, original, function(err, transformed) {
 
 ```js
 var options = {
-  mapping: [ 
+  mapping: [
     "/source/path"
   ]
 }
@@ -81,6 +81,16 @@ var options = {
 ```
 Reads the value at  ```/source/path``` in the original document, transforms it to uppercase, and writes it to ```/destination/path``` in the transformed document
 
+```js
+var options = {
+  mapping: {
+    reader: "/source/path",
+    transformer: "uppercase",
+    writer: "/destination/path"
+  }
+}
+```
+Reads the value at  ```/source/path``` in the original document, transforms it to uppercase, and writes it to ```/destination/path``` in the transformed document
 
 ## Using multiple sources for a single mapping
 ```js

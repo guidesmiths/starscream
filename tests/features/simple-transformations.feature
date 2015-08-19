@@ -46,6 +46,44 @@ Scenario: Array of objects mapping
     ------------------------------------
 
 
+Scenario: Array of reader, transformer and writer pairs
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869"
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10",
+            "transformer": "passThrough",
+            "writer": "/Transfomers: Combiner Wars"
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "Transfomers: Combiner Wars": "1631403869"
+    }
+    ------------------------------------
+
+
 Scenario: Array of objects mapping and default reader and transformer
 
     When I transform the following json:
