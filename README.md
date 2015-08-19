@@ -185,7 +185,41 @@ var options = {
 ```
 Reads the values at ```/source/path```in the original document, transforms it to uppercase, adds the ```foo-``` prefix and writes it to ```/destination/path``` in the transformed document
 
-## Out Of The Box Transformers
+## Out of the box readers
+
+#### jsonPointer
+
+```js
+var options = {
+  mapping: [{
+    reader: {
+      "path": "/source/path"
+      "ignoreMissing": "true"
+    }
+    writer: "/destination/path"
+  }]
+}
+```
+Reads the value at ```/source/path```. If the path is missing and ignoreMissing is false (the defult) return undefined instead of erroring
+
+## Writers of the box readers
+
+#### jsonPointer
+
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    writer: {
+      "path": "/destination/path",
+      "ignoreMissing": "true"
+    }
+  }]
+}
+```
+Writes the value to ```/destination/path```. If the value is undefined and ignoreMissing is true (the default) will not write anything, otherwise writes the value as undefined
+
+## Out of the box transformers
 
 #### uppercase
 
@@ -225,6 +259,21 @@ var options = {
 ```
 Writes either ```/source/path/a``` or ```/source/path/b``` (with preference for a)
 
+#### conditional
+```js
+var options = {
+  mapping: [{
+    readers: [
+      "/source/path/a",
+      "/source/path/b"
+    ],
+    transformer: "mutualExclusion",
+    writer: "/destination/path"
+  }]
+}
+```
+Writes ```/source/path/b``` if ```/source/path/a``` is truthy
+
 #### guard
 ```js
 var options = {
@@ -238,7 +287,7 @@ var options = {
   }]
 }
 ```
-Writes ```/source/path/b``` if ```/source/path/b``` is falsey
+Writes ```/source/path/b``` if ```/source/path/a``` is falsey
 
 ## Custom Transformers
 ```js
