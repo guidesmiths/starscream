@@ -1,6 +1,7 @@
 var async = require('async')
 var format = require('util').format
 var R = require('ramda')
+var merge = require('deepmerge')
 var readers = require('./lib/readers')
 var transformers = require('./lib/transformers')
 var writers = require('./lib/writers')
@@ -8,7 +9,7 @@ var expandMapping = require('./lib/config/expand').expandMapping
 
 module.exports = function starscream(overrides, original, done) {
 
-    var options = R.merge({
+    var options = merge({
         readers: readers,
         transformers: transformers,
         writers: writers
