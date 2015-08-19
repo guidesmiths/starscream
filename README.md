@@ -174,3 +174,27 @@ var options = {
 }
 ```
 Reads the values at ```/source/path```in the original document, transforms it to uppercase, adds the ```foo-``` prefix and writes it to ```/destination/path``` in the transformed document
+
+
+## Custom Transformers
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    transformer: {
+      type: "dbLookup",
+      collection: "refdata"
+    },
+    writer": {
+      type: "jsonPointer",
+      path: "/destination/path"
+    }
+  }],
+  transformers: {
+    dbLookup: function(config, value, cb) {
+      db.collections(config.collection).findOne({ code: value }, cb)
+    })
+  }
+}
+```
+Reads the value at ```/source/path``` in the original document, and cross references it an item of refdata
