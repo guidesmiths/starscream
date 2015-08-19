@@ -23,6 +23,7 @@
     "debug": "^2.2.0",
     "husky": "^0.9.3",
     "json-pointer": "^0.3.0",
+    "lodash": "^3.10.1",
     "ramda": "^0.17.1"
   },
   "devDependencies": {

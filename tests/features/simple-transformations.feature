@@ -222,7 +222,7 @@ Scenario: Array of reader paths mapping
     ------------------------------------
 
 
-Scenario: Object mapping with reader path => writer path
+Scenario: Array of objects mapping with reader path => writer path
 
     When I transform the following json:
     ------------------------------------
@@ -243,9 +243,11 @@ Scenario: Object mapping with reader path => writer path
     Using the mapping:
     ------------------------------------
 
-    {
-        "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10": "/Transfomers: Combiner Wars"
-    }
+    [
+        {
+            "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10": "/Transfomers: Combiner Wars"
+        }
+    ]
 
     ------------------------------------
 
@@ -303,6 +305,50 @@ Scenario: Object mapping with reader path => transformer and writer objects
 
 
 Scenario: Object mapping with reader path => default transformer and writer
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869"
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+
+    {
+        "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10": {}
+    }
+
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869"
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+Scenario: Object mapping with reader path => writer path
 
     When I transform the following json:
     ------------------------------------
@@ -428,5 +474,50 @@ Scenario: Optionally renders missing values
     ------------------------------------
     {
         "Transfomers: Combiner Wars": undefined
+    }
+    ------------------------------------
+
+@only
+Scenario: Using property reader and writer
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869"
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": {
+                "type": "property",
+                "path": "publishers.IDW Publishing.books.Transformers: Combiner Wars.isbn-10"
+            },
+            "transformer": {
+                "type": "passThrough"
+            },
+            "writer": {
+                "type": "property",
+                "path": "Transfomers: Combiner Wars"
+            }
+        }
+    ]
+    ------------------------------------
+
+    Then I should get:
+    ------------------------------------
+    {
+        "Transfomers: Combiner Wars": "1631403869"
     }
     ------------------------------------

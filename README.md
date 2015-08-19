@@ -38,59 +38,87 @@ starscream(options, original, function(err, transformed) {
 })
 ```
 
-#### Shorthand
+#### Mapping Shorthand (Array Based)
 
 ```js
 var options = {
   mapping: [
-    "/source/path"
+    "/source/path/a",
+    "/source/path/b",
   ]
 }
 ```
-Reads the value at  ```/source/path``` in the original document, and writes it to ```/source/path``` in the transformed document
+Reads the value at  ```/source/path/a``` in the original document, and writes it to ```/source/path/a``` in the transformed document
+
 
 ```js
 var options = {
-  mapping: {
-    "/source/path": "/destination/path"
-  }
+  mapping: [{
+    "/source/path/a": "/destination/path/a"
+  }]
 }
 ```
-Copies a value from the ```/source/path``` in the original document to ```/destination/path``` in the transformed document
+Reads the value at ```/source/path/a``` in the original document, and writes it to ```/destination/path/a``` in the transformed document
+
 
 ```js
 var options = {
-  mapping: {
-    "/source/path": {
-      transformer: "uppercase"
-    }
-  }
-}
-```
-Reads the value at  ```/source/path``` in the original document, transforms it to uppercase, and writes it to ```/source/path``` in the transformed document
-
-```js
-var options = {
-  mapping: {
-    "/source/path": {
-      transformer: "uppercase",
-      writer: "/destination/path"
-    }
-  }
-}
-```
-Reads the value at  ```/source/path``` in the original document, transforms it to uppercase, and writes it to ```/destination/path``` in the transformed document
-
-```js
-var options = {
-  mapping: {
-    reader: "/source/path",
+  mapping: [{
+    reader: "/source/path/a",
     transformer: "uppercase",
-    writer: "/destination/path"
+    writer: "/destination/path/a"
+  }, {
+    reader: "/source/path/b",
+    transformer: "uppercase",
+    writer: "/destination/path/b"
+  }
+}]
+```
+Reads the value at  ```/source/path/a``` in the original document, transforms it to uppercase, and writes it to ```/destination/path/a``` in the transformed document
+
+
+#### Mapping Shorthand (Object Based)
+
+```js
+var options = {
+  mapping: {
+    "/source/path/a": "/destination/path/a",
+    "/source/path/b": "/destination/path/b"
   }
 }
 ```
-Reads the value at  ```/source/path``` in the original document, transforms it to uppercase, and writes it to ```/destination/path``` in the transformed document
+Reads the value at ```/source/path/a``` in the original document, and writes it to ```/destination/path/a``` in the transformed document
+
+```js
+var options = {
+  mapping: {
+    "/source/path/a": {
+      transformer: "uppercase"
+    },
+    "/source/path/b": {
+      transformer: "lowercase"
+    }
+  }
+}
+```
+Reads the value at  ```/source/path/a``` in the original document, transforms it to uppercase, and writes it to ```/source/path/a``` in the transformed document
+
+```js
+var options = {
+  mapping: {
+    "/source/path/a": {
+      transformer: "uppercase",
+      writer: "/destination/path/a"
+    },
+    "/source/path/b": {
+      transformer: "lowercase",
+      writer: "/destination/path/b"
+    },
+  }
+}
+```
+Reads the value at  ```/source/path/a``` in the original document, transforms it to uppercase, and writes it to ```/destination/path/b``` in the transformed document
+
 
 ## Using multiple sources for a single mapping
 ```js
@@ -187,7 +215,7 @@ Reads the values at ```/source/path```in the original document, transforms it to
 
 ## Out of the box readers
 
-#### jsonPointer
+#### jsonPointer (default)
 
 ```js
 var options = {
@@ -202,6 +230,23 @@ var options = {
 ```
 Reads the value at ```/source/path```. If the path is missing and ignoreMissing is false (the defult) return undefined instead of erroring
 
+
+#### property
+
+```js
+var options = {
+  mapping: [{
+    reader: {
+      "type": "property",
+      "path": "source.path",
+      "ignoreMissing": "true"
+    }
+    writer: "/destination/path"
+  }]
+}
+```
+Reads the value at ```source.path```. If the path is missing and ignoreMissing is false (the defult) return undefined instead of erroring
+
 ## Writers of the box readers
 
 #### jsonPointer
@@ -209,9 +254,26 @@ Reads the value at ```/source/path```. If the path is missing and ignoreMissing 
 ```js
 var options = {
   mapping: [{
-    reader: "/source/path"
+    reader: {
+      "/source/path"
     writer: {
       "path": "/destination/path",
+      "ignoreMissing": "true"
+    }
+  }]
+}
+```
+Writes the value to ```/destination/path```. If the value is undefined and ignoreMissing is true (the default) will not write anything, otherwise writes the value as undefined
+
+#### property
+
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    writer: {
+      "type": "property",
+      "path": "destination.path",
       "ignoreMissing": "true"
     }
   }]
