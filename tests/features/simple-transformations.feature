@@ -477,7 +477,7 @@ Scenario: Optionally renders missing values
     }
     ------------------------------------
 
-@only
+
 Scenario: Using property reader and writer
 
     When I transform the following json:
