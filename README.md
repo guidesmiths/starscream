@@ -20,16 +20,16 @@ var original = {
 }
 var options = {
   mapping: [{
-    "reader": {
-      "type": "jsonPointer",
-      "path": "/source/path"
+    reade: {
+      type: "jsonPointer",
+      path: "/source/path"
     },
-    "transformer": {
-      "type": "uppercase"
+    transformer: {
+      type: "uppercase"
     },
-    "writer": {
-      "type": "jsonPointer",
-      "path": "destination/path"
+    writer: {
+      type: "jsonPointer",
+      path: "destination/path"
     }
   }]
 }
@@ -62,7 +62,7 @@ Copies a value from the ```/source/path``` in the original document to ```/desti
 var options = {
   mapping: {
     "/source/path": {
-      "transformer": "uppercase"
+      transformer: "uppercase"
     }
   }
 }
@@ -73,8 +73,8 @@ Reads the value at  ```/source/path``` in the original document, transforms it t
 var options = {
   mapping: {
     "/source/path": {
-      "transformer": "uppercase",
-      "writer": "/destination/path"
+      transformer: "uppercase",
+      writer: "/destination/path"
     }
   }
 }
@@ -86,19 +86,19 @@ Reads the value at  ```/source/path``` in the original document, transforms it t
 ```js
 var options = {
   mapping: [{
-    "reader": {
-      "type": "serial",
-      "readers": [{
-        "type": "jsonPointer",
-        "path": "/source/path/a"
+    reader: {
+      type: "serial",
+      reader": [{
+        type: "jsonPointer",
+        path: "/source/path/a"
       }, {
-        "type": "jsonPointer",
-        "path": "/source/path/b"
+        type: "jsonPointer",
+        path: "/source/path/b"
       }],
     },
-    "writer": {
-      "type": "jsonPointer",
-      "path": "/destination/path"
+    writer": {
+      type: "jsonPointer",
+      path: "/destination/path"
     }
   }]
 }
@@ -109,16 +109,16 @@ Reads the values at ```/source/path/a``` and ```/source/path/b``` in the origina
 ```js
 var options = {
   mapping: [{
-    "reader": {
-      "type": "serial",
-      "readers": [
+    reade": {
+      type: "serial",
+      reader: [
         "/source/path/a",
         "/source/path/b"
       }]
     },
-    "writer": {
-      "type": "jsonPointer",
-      "path": "/destination/path"
+    writer: {
+      type: "jsonPointer",
+      path: "/destination/path"
     }
   }]
 }
@@ -129,23 +129,23 @@ The same shorthand rules apply
 ```js
 var options = {
   mapping: [{
-    "reader": {
-      "type": "serial",
-      "readers": [{
-        "type": "jsonPointer",
-        "path": "/source/path/a"
+    reader: {
+      type: "serial",
+      readers: [{
+        type: "jsonPointer",
+        path: "/source/path/a"
       }, {
-        "type": "jsonPointer",
-        "path": "/source/path/b"
+        type: "jsonPointer",
+        path: "/source/path/b"
       }],
     },
-    "transformer: {
-      "type": "concatenate",
-      "separator": "_"
+    transformer: {
+      type: "concatenate",
+      separator: "_"
     },
-    "writer": {
-      "type": "jsonPointer",
-      "path": "/destination/path"
+    writer: {
+      type: "jsonPointer",
+      path: "/destination/path"
     }
   }]
 }
@@ -156,19 +156,19 @@ Reads the values at ```/source/path/a``` and ```/source/path/b``` from the origi
 ```js
 var options = {
   mapping: [{
-    "reader": "/source/path"
-    "transformer: {
-      "type": "serial",
-      "transformers": [{
-        "type": "uppercase"
+    reader: "/source/path"
+    transformer: {
+      type: "serial",
+      transformers: [{
+        type: "uppercase"
       }, {
-        "type": "prefix",
-        "text": "foo-"
+        type: "prefix",
+        text: "foo-"
       }]
     },
-    "writer": {
-      "type": "jsonPointer",
-      "path": "/destination/path"
+    writer": {
+      type: "jsonPointer",
+      path: "/destination/path"
     }
   }]
 }
