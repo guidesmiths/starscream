@@ -185,7 +185,7 @@ var options = {
       type: "dbLookup",
       collection: "refdata"
     },
-    writer": {
+    writer: {
       type: "jsonPointer",
       path: "/destination/path"
     }
