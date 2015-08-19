@@ -40,7 +40,6 @@ starscream(options, original, function(err, transformed) {
 
 #### Shorthand
 
-#### Straight Copy
 ```js
 var options = {
   mapping: [ 
@@ -50,7 +49,6 @@ var options = {
 ```
 Reads the value at  ```/source/path``` in the original document, and writes it to ```/source/path``` in the transformed document
 
-#### Move a value
 ```js
 var options = {
   mapping: {
@@ -60,7 +58,6 @@ var options = {
 ```
 Copies a value from the ```/source/path``` in the original document to ```/destination/path``` in the transformed document
 
-#### Tranform a value
 ```js
 var options = {
   mapping: {
@@ -72,7 +69,6 @@ var options = {
 ```
 Reads the value at  ```/source/path``` in the original document, transforms it to uppercase, and writes it to ```/source/path``` in the transformed document
 
-#### Tranform and move a value
 ```js
 var options = {
   mapping: {
