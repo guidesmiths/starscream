@@ -20,7 +20,7 @@ var original = {
 }
 var options = {
   mapping: [{
-    reade: {
+    reader: {
       type: "jsonPointer",
       path: "/source/path"
     },
