@@ -1,6 +1,6 @@
-Feature: Starscream Transformation
+Feature: Simple Transformations
 
-Scenario: Simple Transformation With Longhand Mapping
+Scenario: Array of objects mapping
 
     When I transform the following json:
     ------------------------------------
@@ -9,7 +9,7 @@ Scenario: Simple Transformation With Longhand Mapping
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -41,12 +41,12 @@ Scenario: Simple Transformation With Longhand Mapping
     Then I should get:
     ------------------------------------
     {
-        "Transfomers: Combiner Wars": 1631403869
+        "Transfomers: Combiner Wars": "1631403869"
     }
     ------------------------------------
 
 
-Scenario: Simple Transformation With Longhand Mapping And Default Reader / Transformer
+Scenario: Array of objects mapping and default reader and transformer
 
     When I transform the following json:
     ------------------------------------
@@ -55,7 +55,7 @@ Scenario: Simple Transformation With Longhand Mapping And Default Reader / Trans
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -84,7 +84,7 @@ Scenario: Simple Transformation With Longhand Mapping And Default Reader / Trans
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -93,7 +93,7 @@ Scenario: Simple Transformation With Longhand Mapping And Default Reader / Trans
     ------------------------------------
 
 
-Scenario: Simple Transformation With Longhand Mapping And Default Writer / Transformer
+Scenario: Array of objects mapping with default writer and transformer
 
     When I transform the following json:
     ------------------------------------
@@ -102,7 +102,7 @@ Scenario: Simple Transformation With Longhand Mapping And Default Writer / Trans
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -131,7 +131,7 @@ Scenario: Simple Transformation With Longhand Mapping And Default Writer / Trans
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -140,8 +140,7 @@ Scenario: Simple Transformation With Longhand Mapping And Default Writer / Trans
     ------------------------------------
 
 
-
-Scenario: Simple Transformation With Extreme Shorthand Mapping
+Scenario: Array of reader paths mapping
 
     When I transform the following json:
     ------------------------------------
@@ -150,7 +149,51 @@ Scenario: Simple Transformation With Extreme Shorthand Mapping
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+
+    [
+        "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10"
+    ]
+
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869"
+                    }
+                }
+            }
+        }
+    }
+    ------------------------------------
+
+
+Scenario: Object mapping with reader path => writer path
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "publishers": {
+            "IDW Publishing": {
+                "books": {
+                    "Transformers: Combiner Wars": {
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -163,7 +206,7 @@ Scenario: Simple Transformation With Extreme Shorthand Mapping
     ------------------------------------
 
     {
-        "/Transfomers: Combiner Wars": "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10"
+        "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10": "/Transfomers: Combiner Wars"
     }
 
     ------------------------------------
@@ -172,12 +215,12 @@ Scenario: Simple Transformation With Extreme Shorthand Mapping
     Then I should get:
     ------------------------------------
     {
-        "Transfomers: Combiner Wars": 1631403869
+        "Transfomers: Combiner Wars": "1631403869"
     }
     ------------------------------------
 
 
-Scenario: Simple Transformation With Writer Shorthand Mapping
+Scenario: Object mapping with reader path => transformer and writer objects
 
     When I transform the following json:
     ------------------------------------
@@ -186,7 +229,7 @@ Scenario: Simple Transformation With Writer Shorthand Mapping
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -199,13 +242,13 @@ Scenario: Simple Transformation With Writer Shorthand Mapping
     ------------------------------------
 
     {
-        "/Transfomers: Combiner Wars": {
-            "reader": {
-                "type": "jsonPointer",
-                "path": "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10"
-            },
+        "/publishers/IDW Publishing/books/Transformers: Combiner Wars/isbn-10": {
             "transformer": {
                 "type": "passThrough"
+            },
+            "writer": {
+                "type": "jsonPointer",
+                "path": "/Transfomers: Combiner Wars"
             }
         }
     }
@@ -216,12 +259,12 @@ Scenario: Simple Transformation With Writer Shorthand Mapping
     Then I should get:
     ------------------------------------
     {
-        "Transfomers: Combiner Wars": 1631403869
+        "Transfomers: Combiner Wars": "1631403869"
     }
     ------------------------------------
 
 
-Scenario: Simple Transformation With Writer Shorthand Mapping And Default Reader / Transformer
+Scenario: Object mapping with reader path => default transformer and writer
 
     When I transform the following json:
     ------------------------------------
@@ -230,7 +273,7 @@ Scenario: Simple Transformation With Writer Shorthand Mapping And Default Reader
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
@@ -256,7 +299,7 @@ Scenario: Simple Transformation With Writer Shorthand Mapping And Default Reader
             "IDW Publishing": {
                 "books": {
                     "Transformers: Combiner Wars": {
-                        "isbn-10": 1631403869
+                        "isbn-10": "1631403869"
                     }
                 }
             }
