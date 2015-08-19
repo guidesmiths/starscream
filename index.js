@@ -4,7 +4,7 @@ var R = require('ramda')
 var readers = require('./lib/readers')
 var transformers = require('./lib/transformers')
 var writers = require('./lib/writers')
-var expand = require('./lib/config/expand')
+var expandMapping = require('./lib/config/expand').expandMapping
 
 module.exports = function starscream(overrides, original, done) {
 
@@ -14,7 +14,7 @@ module.exports = function starscream(overrides, original, done) {
         writers: writers
     }, overrides);
 
-    async.reduce(expand(options.mapping), {}, function(wip, entry, next) {
+    async.reduce(expandMapping(options.mapping), {}, function(wip, entry, next) {
         async.seq(
             function(cb) {
                 var fn = options.readers[entry.reader.type]
