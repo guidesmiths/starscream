@@ -10,9 +10,14 @@ var starscream = require('../..')
 
 module.exports = (function() {
 
-    var dictionary = new Dictionary().define('json', /([^\u0000]*)/, function(text, cb) {
-        safeParse(text, cb)
-    })
+    var dictionary = new Dictionary()
+        .define('json', /([^\u0000]*)/, function(text, cb) {
+            safeParse(text, cb)
+        })
+        .define('object', /([^\u0000]*)/, function(text, cb) {
+            var x = undefined
+            cb(null, eval('x = ' + text))
+        })
 
     var library = English.library(dictionary)
 
@@ -26,7 +31,7 @@ module.exports = (function() {
         cb()
     })
 
-    .then("I should get:$json", function(expected, cb) {
+    .then("I should get:$object", function(expected, cb) {
         starscream(this.ctx.options, this.ctx.source, function(err, output) {
             assert.ifError(err)
             assert.deepEqual(output, expected)
