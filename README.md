@@ -283,6 +283,18 @@ Writes the value to ```/destination/path```. If the value is undefined and ignor
 
 ## Out of the box transformers
 
+#### toggle
+
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    transformer: "toggle",
+    writer: "/destination/path"
+  }]
+}
+```
+
 #### uppercase
 
 ```js
