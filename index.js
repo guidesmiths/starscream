@@ -2,12 +2,14 @@ var async = require('async')
 var format = require('util').format
 var R = require('ramda')
 var merge = require('deepmerge')
-var readers = require('./lib/readers')
-var transformers = require('./lib/transformers')
-var writers = require('./lib/writers')
 var expandMapping = require('./lib/config/expand').expandMapping
+var readers = require('./lib/readers')
+var writers = require('./lib/writers')
 
 module.exports = function starscream(overrides, original, done) {
+
+    // Require this in on execute to avoid recursive require of the starscream transformer task
+    var transformers = require('./lib/transformers')
 
     var options = merge({
         readers: readers,

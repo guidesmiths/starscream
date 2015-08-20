@@ -438,7 +438,7 @@ Scenario: Conditional (second reader falsey)
     When I transform the following json:
     ------------------------------------
     {
-        "transformers": [
+        "autobots": [
             "bumble bee",
             "optimus prime"
         ]
@@ -450,12 +450,14 @@ Scenario: Conditional (second reader falsey)
     ------------------------------------
     [
         {
-            "reader": "/transformers",
+            "reader": "/autobots",
             "transformer": {
                 "type": "mapSeries",
-                "transformer": "uppercase"
+                "transformer": {
+                    "type": "uppercase"
+                }
             },
-            "writer": "/TRANSFORMERS"
+            "writer": "/autobots"
         }
     ]
     ------------------------------------
@@ -464,7 +466,7 @@ Scenario: Conditional (second reader falsey)
     Then I should get:
     ------------------------------------
     {
-        "TRANSFORMERS": [
+        "autobots": [
             "BUMBLE BEE",
             "OPTIMUS PRIME"
         ]
