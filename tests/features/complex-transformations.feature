@@ -431,3 +431,42 @@ Scenario: Conditional (second reader falsey)
     {
     }
     ------------------------------------
+
+
+Scenario: Conditional (second reader falsey)
+
+    When I transform the following json:
+    ------------------------------------
+    {
+        "transformers": [
+            "bumble bee",
+            "optimus prime"
+        ]
+    }
+    ------------------------------------
+
+
+    Using the mapping:
+    ------------------------------------
+    [
+        {
+            "reader": "/transformers",
+            "transformer": {
+                "type": "mapSeries",
+                "transformer": "uppercase"
+            },
+            "writer": "/TRANSFORMERS"
+        }
+    ]
+    ------------------------------------
+
+
+    Then I should get:
+    ------------------------------------
+    {
+        "TRANSFORMERS": [
+            "BUMBLE BEE",
+            "OPTIMUS PRIME"
+        ]
+    }
+    ------------------------------------
