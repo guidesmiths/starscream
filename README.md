@@ -213,6 +213,25 @@ var options = {
 ```
 Reads the values at ```/source/path```in the original document, transforms it to uppercase, adds the ```foo-``` prefix and writes it to ```/destination/path``` in the transformed document
 
+
+## Iteration
+
+You can iterate over arrays using the ```mapSeries``` transformer
+
+```js
+    [
+        {
+            "reader": "/source/path",
+            "transformer": {
+                "type": "mapSeries",
+                "transformer": "uppercase"
+            },
+            "writer": "/destination/path"
+        }
+    ]
+```
+Reads the array at ```/source/path``` and transforms each element to upper case before writing the array to ```/destination/path```
+
 ## Out of the box readers
 
 #### jsonPointer (default)
@@ -282,6 +301,22 @@ var options = {
 Writes the value to ```/destination/path```. If the value is undefined and ignoreMissing is true (the default) will not write anything, otherwise writes the value as undefined
 
 ## Out of the box transformers
+
+#### mapSeries
+
+```js
+var options = {
+  mapping: [{
+    reader: "/source/path"
+    transformer: {
+      "type": "mapSeries",
+      "transformer": "uppercase"
+    }
+    "toggle",
+    writer: "/destination/path"
+  }]
+}
+```
 
 #### toggle
 
