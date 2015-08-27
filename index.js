@@ -1,6 +1,5 @@
 var async = require('async')
 var format = require('util').format
-var R = require('ramda')
 var merge = require('deepmerge')
 var expandMapping = require('./lib/config/expand').expandMapping
 var readers = require('./lib/readers')

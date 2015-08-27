@@ -15,7 +15,7 @@ module.exports = (function() {
             safeParse(text, cb)
         })
         .define('object', /([^\u0000]*)/, function(text, cb) {
-            var x = undefined
+            var x = 0; x + 1
             cb(null, eval('x = ' + text))
         })
 
