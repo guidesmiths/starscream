@@ -1,4 +1,4 @@
-# Deprecated in favour of [AC/DC](https://github.com/guidesmiths/starscream)
+# Deprecated in favour of [AC/DC](https://github.com/guidesmiths/acdc)
 
 # starscream
 Asynchronous JSON transformation
