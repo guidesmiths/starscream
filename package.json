@@ -4,8 +4,8 @@
   "description": "JSON transformer with asynchronous converters",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha --recursive tests",
-    "lint": "node_modules/.bin/eslint .",
+    "test": "mocha --recursive tests",
+    "lint": "eslint .",
     "precommit": "npm test"
   },
   "keywords": [
@@ -23,7 +23,9 @@
     "debug": "^2.2.0",
     "deepmerge": "^0.2.10",
     "json-pointer": "^0.3.0",
-    "lodash": "^3.10.1",
+    "lodash.get": "^4.4.2",
+    "lodash.has": "^4.5.2",
+    "lodash.set": "^4.3.2",
     "ramda": "^0.17.1"
   },
   "devDependencies": {
@@ -33,5 +35,17 @@
     "mocha": "^2.2.5",
     "safe-json-parse": "^4.0.0",
     "yadda": "^0.15.2"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guidesmiths/starscream.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guidesmiths/starscream/issues"
+  },
+  "homepage": "https://github.com/guidesmiths/starscream#readme"
 }
